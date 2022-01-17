@@ -1,0 +1,71 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "org.jetbrains.kotlin.jvm" version "$kotlinVersion"
+	id "org.jetbrains.kotlin.kapt" version "$kotlinVersion"
+	id "org.hidetake.swagger.generator" version "$swaggerGeneratorVersion" apply false
+}
+
+apply from: 'plugins/swagger.gradle'
+
+group = 'com.richards'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+sourceSets {
+	main {
+		java {
+			srcDir file("${buildDir}/generated/source/kapt/main")
+			srcDir file("${buildDir}/swagger-code-server/src/main/java")
+		}
+		kotlin { srcDir 'src/main/kotlin' }
+		resources { srcDir 'src/main/resources' }
+	}
+	test {
+		kotlin { srcDir 'src/test/kotlin' }
+		resources { srcDir 'src/test/resources' }
+	}
+
+	main.java.srcDirs += 'src/main/kotlin'
+	test.java.srcDirs += 'src/test/kotlin'
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	springFoxArtifacts = [
+			'springfox-swagger2',
+			'springfox-swagger-ui'
+	]
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.codehaus.groovy:groovy'
+	runtimeOnly 'mysql:mysql-connector-java'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	swaggerCodegen "io.swagger:swagger-codegen-cli:$swaggerCodeGenVersion"
+	swaggerUI "org.webjars:swagger-ui:$swaggerUIVersion"
+
+	springFoxArtifacts.each {
+		artifact -> implementation "io.springfox:$artifact:$springFoxVersion"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+tasks.processResources {
+	duplicatesStrategy = 'include'
+}
+
+tasks.processTestResources {
+	duplicatesStrategy = 'include'
+}

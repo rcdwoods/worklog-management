@@ -1,0 +1,18 @@
+apply plugin: 'org.hidetake.swagger.generator'
+
+swaggerSources {
+    server {
+        inputFile = file('src/main/resources/swagger/worklog-management-api.yml')
+        code {
+            configFile = file('src/main/resources/swagger/config.json')
+            components = ['models', 'apis']
+            dependsOn validation
+            language = 'spring'
+        }
+        ui {
+            options.docExpansion = 'full'
+        }
+    }
+}
+
+tasks.compileKotlin.dependsOn(generateSwaggerCodeServer)
