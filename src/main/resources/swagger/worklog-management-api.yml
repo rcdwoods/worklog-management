@@ -8,3 +8,33 @@ tags:
 schemes:
   - https
 paths:
+  '/employees':
+    get:
+      tags:
+        - employee
+      summary: Retrieve Employees
+      description: Retrieve Employees.
+      operationId: retrieveEmployees
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Employee'
+
+definitions:
+  Employee:
+    type: object
+    description: Employee
+    properties:
+      id:
+        description: Employee identifier
+        type: integer
+        format: int64
+      name:
+        type: string
+      email:
+        type: string
