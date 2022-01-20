@@ -15,6 +15,18 @@ paths:
       summary: Retrieve Employees
       description: Retrieve Employees.
       operationId: retrieveEmployees
+      parameters:
+      - in: query
+        name: page
+        description: page number starting at zero
+        required: true
+        type: integer
+        format: int32
+      - in: query
+        name: per_page
+        description: page size - 5 by default
+        type: integer
+        format: int32
       produces:
         - application/json
       responses:
@@ -28,6 +40,13 @@ paths:
       summary: Register Employee
       description: Register Employee.
       operationId: registerEmployee
+      parameters:
+        - in: body
+          name: employee
+          description: Employee to register
+          required: true
+          schema:
+            $ref: '#/definitions/Employee'
       produces:
         - application/json
       responses:
@@ -38,9 +57,16 @@ paths:
     put:
       tags:
         - employee
-      summary: Register Employee
-      description: Register Employee.
-      operationId: registerEmployee
+      summary: Update Employee
+      description: Update Employee.
+      operationId: updateEmployee
+      parameters:
+        - in: body
+          name: employee
+          description: Employee to update
+          required: true
+          schema:
+            $ref: '#/definitions/Employee'
       produces:
         - application/json
       responses:
