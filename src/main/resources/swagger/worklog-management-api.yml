@@ -21,9 +21,46 @@ paths:
         '200':
           description: ok
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Employee'
+            $ref: '#/definitions/EmployeesPaginated'
+    post:
+      tags:
+        - employee
+      summary: Register Employee
+      description: Register Employee.
+      operationId: registerEmployee
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/Employee'
+    put:
+      tags:
+        - employee
+      summary: Register Employee
+      description: Register Employee.
+      operationId: registerEmployee
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/Employee'
+    delete:
+      tags:
+        - employee
+      summary: Delete Employee
+      description: Delete Employee.
+      operationId: deleteEmployee
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/Employee'
 
 definitions:
   Employee:
@@ -38,3 +75,20 @@ definitions:
         type: string
       email:
         type: string
+  EmployeesPaginated:
+    type: object
+    description: Employee paginated
+    properties:
+      content:
+        description: Employees
+        type: array
+        items:
+          $ref: '#/definitions/Employee'
+      page:
+        description: Actual page
+        type: integer
+        format: int32
+      per_page:
+        description: Employees per page
+        type: integer
+        format: int32
