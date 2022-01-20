@@ -38,4 +38,10 @@ class EmployeeServiceImpl(
         }
     }
 
+    override fun deleteEmployeeById(id: Long) {
+        val employeeFound = retrieveEmployeeById(id)
+
+        employeeRepository.delete(employeeFound)
+    }
+
 }
