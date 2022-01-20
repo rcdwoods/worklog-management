@@ -8,3 +8,118 @@ tags:
 schemes:
   - https
 paths:
+  '/employees':
+    get:
+      tags:
+        - employee
+      summary: Retrieve Employees
+      description: Retrieve Employees.
+      operationId: retrieveEmployees
+      parameters:
+      - in: query
+        name: page
+        description: page number starting at zero
+        required: true
+        type: integer
+        format: int32
+      - in: query
+        name: per_page
+        description: page size - 5 by default
+        type: integer
+        format: int32
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/EmployeesPaginated'
+    post:
+      tags:
+        - employee
+      summary: Register Employee
+      description: Register Employee.
+      operationId: registerEmployee
+      parameters:
+        - in: body
+          name: employee
+          description: Employee to register
+          required: true
+          schema:
+            $ref: '#/definitions/Employee'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/Employee'
+    put:
+      tags:
+        - employee
+      summary: Update Employee
+      description: Update Employee.
+      operationId: updateEmployee
+      parameters:
+        - in: body
+          name: employee
+          description: Employee to update
+          required: true
+          schema:
+            $ref: '#/definitions/Employee'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/Employee'
+    delete:
+      tags:
+        - employee
+      summary: Delete Employee
+      description: Delete Employee.
+      operationId: deleteEmployee
+      parameters:
+        - in: path
+          name: id
+          description: Employee identifier
+          required: true
+          type: integer
+          format: int64
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ok
+
+definitions:
+  Employee:
+    type: object
+    description: Employee
+    properties:
+      id:
+        description: Employee identifier
+        type: integer
+        format: int64
+      name:
+        type: string
+      email:
+        type: string
+  EmployeesPaginated:
+    type: object
+    description: Employee paginated
+    properties:
+      content:
+        description: Employees
+        type: array
+        items:
+          $ref: '#/definitions/Employee'
+      page:
+        description: Actual page
+        type: integer
+        format: int32
+      per_page:
+        description: Employees per page
+        type: integer
+        format: int32
