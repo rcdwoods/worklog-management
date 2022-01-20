@@ -8,7 +8,9 @@ import io.swagger.model.EmployeesPaginated
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -50,5 +52,11 @@ class EmployeesResource(
         val employeeConverted = employeeConverter.toEmployee(employee)
         val updatedEmployee = employeeService.updateEmployee(employeeConverted)
         return ResponseEntity.ok(employeeConverter.toEmployeeDTO(updatedEmployee))
+    }
+
+    @DeleteMapping
+    override fun deleteEmployee(@PathVariable id: Long): ResponseEntity<Void> {
+        employeeService.deleteEmployeeById(id)
+        return ResponseEntity.noContent().build()
     }
 }
