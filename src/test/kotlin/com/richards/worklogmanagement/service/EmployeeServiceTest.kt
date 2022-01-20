@@ -103,6 +103,20 @@ class EmployeeServiceTest {
         }
     }
 
+    @Test
+    fun `must delete employee when employee exists`() {
+        employeeService.deleteEmployeeById(4L)
+
+        Mockito.verify(employeeRepository, Mockito.times(1)).delete(Mockito.any())
+    }
+
+    @Test
+    fun `must not delete and throw Exception employee when employee does not exist`() {
+        assertThrows<IllegalArgumentException> {
+            employeeService.retrieveEmployeeById(5L)
+        }
+    }
+
     fun factoryEmployee(id: Long, name: String) = Employee(
         id = id,
         name = name,
