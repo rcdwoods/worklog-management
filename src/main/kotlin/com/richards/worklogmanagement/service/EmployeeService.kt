@@ -8,4 +8,5 @@ interface EmployeeService {
     fun saveEmployee(employee: Employee): Employee
     fun updateEmployee(employee: Employee): Employee
     fun retrieveEmployees(pageable: Pageable): Page<Employee>
+    fun retrieveEmployeeById(id: Long): Employee
 }
